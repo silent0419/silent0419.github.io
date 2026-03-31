@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>5의 배수 출력</title>
 </head>
 <body>
+    <h2>1부터 100까지 5의 배수</h2>
+    <div id="result"></div>
 
-<h2>1부터 100까지 5의 배수</h2>
-
-<script>
-for (let i = 5; i <= 100; i += 5) {
-    document.write(i + "<br>");
-}
-</script>
+    <script>
+        let output = "";
+        for (let i = 5; i <= 100; i += 5) {
+            output += i + "<br>";
+        }
+        document.getElementById("result").innerHTML = output;
+    </script>
+</body>
+</html>
