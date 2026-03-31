@@ -2,18 +2,46 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>5의 배수 출력</title>
+    <title>배수 출력_1</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+        .number {
+            display: inline-block;
+            width: 60px; /* 간격 조절 */
+        }
+    </style>
 </head>
 <body>
-    <h2>1부터 100까지 5의 배수_수정</h2>
-    <div id="result"></div>
 
-    <script>
-        let output = "";
-        for (let i = 5; i <= 100; i += 5) {
-            output += i + "<br>";
-        }
-        document.getElementById("result").innerHTML = output;
-    </script>
+<h2>배수 출력 프로그램</h2>
+
+<label>숫자를 입력하세요: </label>
+<input type="number" id="num">
+<button onclick="printMultiples()">실행</button>
+
+<br><br>
+
+<div id="result"></div>
+
+<script>
+function printMultiples() {
+    let n = document.getElementById("num").value;
+    let output = "";
+
+    if (n === "" || n <= 0) {
+        alert("올바른 숫자를 입력하세요!");
+        return;
+    }
+
+    for (let i = n; i <= 100; i += Number(n)) {
+        output += "<span class='number'>" + i + "</span>";
+    }
+
+    document.getElementById("result").innerHTML = output;
+}
+</script>
+
 </body>
 </html>
