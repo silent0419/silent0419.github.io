@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>배수 출력</title>
+    <title>배수 출력 및 그래프</title>
     <style>
         .input-area {
             display: flex;
@@ -10,24 +10,30 @@
             gap: 10px;
         }
         img {
-            width: 40px; /* 이미지 크기 조절 */
+            width: 40px;
+        }
+        #chart {
+            margin-top: 20px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
 
-<h2>배수 출력 프로그램_5</h2>
+<h2>배수 출력 프로그램_6</h2>
 
 <div class="input-area">
     <label>숫자를 입력하세요: </label>
     <input type="number" id="num" onkeydown="handleKey(event)">
-    <img src="/Input.png" alt="input image">
+    <img src="input.png" alt="input image">
     <button onclick="printMultiples()">실행</button>
 </div>
 
-<br><br>
+<br>
 
 <div id="result"></div>
+
+<canvas id="chart" width="600" height="300"></canvas>
 
 <script>
 function printMultiples() {
@@ -45,13 +51,68 @@ function printMultiples() {
     }
 
     document.getElementById("result").innerText = result.join(", ");
+
+    drawGraph(result);
 }
 
-// 엔터키 처리
 function handleKey(event) {
     if (event.key === "Enter") {
         printMultiples();
     }
+}
+
+function drawGraph(data) {
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (data.length === 0) return;
+
+    const padding = 40;
+    const chartWidth = canvas.width - padding * 2;
+    const chartHeight = canvas.height - padding * 2;
+    const maxValue = Math.max(...data);
+
+    // 축 그리기
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, canvas.height - padding);
+    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+
+    // 꺾은선 그래프
+    ctx.beginPath();
+    data.forEach((value, index) => {
+        const x = padding + (chartWidth / (data.length - 1 || 1)) * index;
+        const y = canvas.height - padding - (value / maxValue) * chartHeight;
+
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // 점 표시
+    data.forEach((value, index) => {
+        const x = padding + (chartWidth / (data.length - 1 || 1)) * index;
+        const y = canvas.height - padding - (value / maxValue) * chartHeight;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = "red";
+        ctx.fill();
+
+        // 값 표시
+        ctx.fillStyle = "black";
+        ctx.font = "12px Arial";
+        ctx.fillText(value, x - 10, y - 10);
+    });
 }
 </script>
 
