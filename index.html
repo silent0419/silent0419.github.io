@@ -2,16 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>배수 출력_1</title>
-    <style>
-        body {
-            font-family: Arial;
-        }
-        .number {
-            display: inline-block;
-            width: 60px; /* 간격 조절 */
-        }
-    </style>
+    <title>배수 출력</title>
 </head>
 <body>
 
@@ -27,19 +18,21 @@
 
 <script>
 function printMultiples() {
-    let n = document.getElementById("num").value;
-    let output = "";
+    let n = Number(document.getElementById("num").value);
 
-    if (n === "" || n <= 0) {
+    if (!n || n <= 0) {
         alert("올바른 숫자를 입력하세요!");
         return;
     }
 
-    for (let i = n; i <= 100; i += Number(n)) {
-        output += "<span class='number'>" + i + "</span>";
+    let result = [];
+
+    for (let i = n; i <= 100; i += n) {
+        result.push(i);
     }
 
-    document.getElementById("result").innerHTML = output;
+    // 쉼표로 연결해서 출력
+    document.getElementById("result").innerText = result.join(", ");
 }
 </script>
 
